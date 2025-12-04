@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Carousel — Arrows + Autoplay</title>
+    <style>
+      :root {
+        --width: 900px;
+        --height: 420px;
+        --accent: #0f62fe;
+        --radius: 12px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial;
+        margin: 40px;
+        display: flex;
+        justify-content: center;
+      }
+      .carousel {
+        width: min(100%, var(--width));
+        height: var(--height);
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        background: #111;
+      }
+
+      /* Slides wrapper */
+      .slides {
+        display: flex;
+        height: 100%;
+        transition: transform 600ms cubic-bezier(0.22, 0.9, 0.35, 1);
+        will-change: transform;
+      }
+
+      /* Each slide */
+      .slide {
+        min-width: 100%;
+        height: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: clamp(18px, 3vw, 28px);
+        padding: 24px;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .slide .caption {
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.35),
+          rgba(0, 0, 0, 0.6)
+        );
+        padding: 14px 18px;
+        border-radius: 10px;
+        max-width: 70%;
+        text-align: left;
+      }
+
+      /* Arrows */
+      .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(4px);
+        cursor: pointer;
+        user-select: none;
+      }
+      .arrow:active {
+        transform: translateY(-50%) scale(0.98);
+      }
+      .arrow[aria-hidden="true"] {
+        display: none;
+      }
+      .arrow.left {
+        left: 12px;
+      }
+      .arrow.right {
+        right: 12px;
+      }
+
+      .arrow svg {
+        width: 18px;
+        height: 18px;
+        fill: white;
+      }
+
+      /* Dots */
+      .dots {
+        position: absolute;
+        left: 50%;
+        bottom: 12px;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        padding: 6px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.22);
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        cursor: pointer;
+        opacity: 0.6;
+        border: 2px solid rgba(255, 255, 255, 0.18);
+      }
+      .dot.active {
+        opacity: 1;
+        background: var(--accent);
+        border-color: transparent;
+      }
+
+      /* Controls row (autoplay toggle) */
+      .controls {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-size: 13px;
+        color: #fff;
+        opacity: 0.95;
+        background: rgba(0, 0, 0, 0.18);
+        padding: 6px 8px;
+        border-radius: 999px;
+      }
+      .controls button {
+        background: transparent;
+        border: 0;
+        color: inherit;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 6px;
+      }
+      .controls button:hover {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      /* Keyboard focus and accessibility */
+      .arrow:focus,
+      .dot:focus,
+      .controls button:focus {
+        outline: 3px solid rgba(15, 98, 254, 0.18);
+      }
+
+      /* Responsive smaller height */
+      @media (max-width: 640px) {
+        :root {
+          --height: 260px;
+        }
+        .slide .caption {
+          max-width: 90%;
+        }
+        .controls {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel" id="carousel" aria-roledescription="carousel">
+      <div class="slides" id="slides">
+        <div
+          class="slide"
+          style="
+            background-image: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.25),
+                rgba(0, 0, 0, 0.15)
+              ),
+              url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1600&q=60');
+          "
+          data-index="0"
+        >
+          <div class="caption">
+            <h2 style="margin: 0 0 6px 0">Scenic Mountain Road</h2>
+            <p style="margin: 0">
+              A calm drive with fresh air — perfect for weekend getaways.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="slide"
+          style="
+            background-image: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.25),
+                rgba(0, 0, 0, 0.15)
+              ),
+              url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=60');
+          "
+          data-index="1"
+        >
+          <div class="caption">
+            <h2 style="margin: 0 0 6px 0">City Night Lights</h2>
+            <p style="margin: 0">
+              Modern designs, bright nights — embrace the urban vibe.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="slide"
+          style="
+            background-image: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.25),
+                rgba(0, 0, 0, 0.15)
+              ),
+              url('https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1600&q=60');
+          "
+          data-index="2"
+        >
+          <div class="caption">
+            <h2 style="margin: 0 0 6px 0">Convertible Cruise</h2>
+            <p style="margin: 0">
+              Sun, sea, and an open-top — feel the breeze.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="slide"
+          style="
+            background-image: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.25),
+                rgba(0, 0, 0, 0.15)
+              ),
+              url('https://images.unsplash.com/photo-1433838552652-f9a46b332c40?w=1600&q=60');
+          "
+          data-index="3"
+        >
+          <div class="caption">
+            <h2 style="margin: 0 0 6px 0">Classic Roadtrip</h2>
+            <p style="margin: 0">
+              Rediscover classics and enjoy timeless routes.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="slide"
+          style="
+            background-image: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.25),
+                rgba(0, 0, 0, 0.15)
+              ),
+              url('https://images.unsplash.com/photo-1429087969512-1e85aab2683d?w=1600&q=60');
+          "
+          data-index="4"
+        >
+          <div class="caption">
+            <h2 style="margin: 0 0 6px 0">Off-Road Adventure</h2>
+            <p style="margin: 0">Power and control on rugged trails.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- arrows -->
+      <button class="arrow left" id="prev" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+        </svg>
+      </button>
+      <button class="arrow right" id="next" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+        </svg>
+      </button>
+
+      <!-- dots -->
+      <div class="dots" id="dots" role="tablist" aria-label="Slide dots"></div>
+
+      <!-- top-right controls -->
+      <div class="controls">
+        <button id="toggleAutoplay" aria-pressed="true" title="Toggle autoplay">
+          Autoplay ⏵
+        </button>
+        <div style="font-size: 12px; opacity: 0.9; padding-left: 6px">
+          Interval: <span id="intervalLabel">3s</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const carousel = document.getElementById("carousel");
+        const slidesEl = document.getElementById("slides");
+        const slides = Array.from(slidesEl.children);
+        const prevBtn = document.getElementById("prev");
+        const nextBtn = document.getElementById("next");
+        const dotsEl = document.getElementById("dots");
+        const toggleAutoplayBtn = document.getElementById("toggleAutoplay");
+        const intervalLabel = document.getElementById("intervalLabel");
+
+        let current = 0;
+        const total = slides.length;
+
+        // Autoplay settings (change here if you want)
+        let autoplay = true; // start with autoplay on
+        let intervalMs = 3000; // autoplay interval in milliseconds
+        let timer = null;
+
+        // Create dots
+        slides.forEach((_, i) => {
+          const d = document.createElement("button");
+          d.className = "dot";
+          d.setAttribute("aria-label", "Go to slide " + (i + 1));
+          d.setAttribute("role", "tab");
+          d.addEventListener("click", () => goTo(i));
+          dotsEl.appendChild(d);
+        });
+
+        const dots = Array.from(dotsEl.children);
+
+        function update() {
+          slidesEl.style.transform = `translateX(${-current * 100}%)`;
+          dots.forEach((d, i) => d.classList.toggle("active", i === current));
+        }
+
+        function prev() {
+          current = (current - 1 + total) % total;
+          update();
+          resetTimer();
+        }
+        function next() {
+          current = (current + 1) % total;
+          update();
+          resetTimer();
+        }
+        function goTo(idx) {
+          current = (idx + total) % total;
+          update();
+          resetTimer();
+        }
+
+        prevBtn.addEventListener("click", prev);
+        nextBtn.addEventListener("click", next);
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+          if (
+            document.activeElement &&
+            (document.activeElement.tagName === "INPUT" ||
+              document.activeElement.tagName === "TEXTAREA")
+          )
+            return;
+          if (e.key === "ArrowLeft") prev();
+          if (e.key === "ArrowRight") next();
+        });
+
+        // Autoplay controls
+        function startTimer() {
+          stopTimer();
+          if (autoplay)
+            timer = setInterval(() => {
+              next();
+            }, intervalMs);
+        }
+        function stopTimer() {
+          if (timer) {
+            clearInterval(timer);
+            timer = null;
+          }
+        }
+        function resetTimer() {
+          stopTimer();
+          startTimer();
+        }
+
+        // Pause on hover/focus
+        carousel.addEventListener("mouseenter", () => {
+          stopTimer();
+        });
+        carousel.addEventListener("mouseleave", () => {
+          startTimer();
+        });
+        carousel.addEventListener("focusin", () => {
+          stopTimer();
+        });
+        carousel.addEventListener("focusout", () => {
+          startTimer();
+        });
+
+        // Toggle autoplay button
+        toggleAutoplayBtn.addEventListener("click", () => {
+          autoplay = !autoplay;
+          toggleAutoplayBtn.setAttribute(
+            "aria-pressed",
+            String(!autoplay ? false : true)
+          );
+          toggleAutoplayBtn.textContent = autoplay ? "Autoplay ⏵" : "Paused ⏸";
+          startTimer();
+        });
+
+        // Expose a simple API on the carousel element
+        carousel.carouselAPI = {
+          next,
+          prev,
+          goTo,
+          start() {
+            autoplay = true;
+            startTimer();
+          },
+          stop() {
+            autoplay = false;
+            stopTimer();
+          },
+        };
+
+        // Publicly readable interval label
+        function updateIntervalLabel() {
+          intervalLabel.textContent = Math.round(intervalMs / 1000) + "s";
+        }
+        updateIntervalLabel();
+
+        // Initialize
+        update();
+        startTimer();
+
+        // Optional: change the interval by scrolling the mouse wheel over the interval label (small UX touch)
+        intervalLabel.parentElement.addEventListener("wheel", (e) => {
+          e.preventDefault();
+          const delta = Math.sign(e.deltaY);
+          // change by 500ms per wheel tick
+          intervalMs = Math.max(1000, intervalMs + delta * 500);
+          updateIntervalLabel();
+          startTimer();
+        });
+
+        // Make sure images (backgrounds) are visible before starting — helpful on slow connections
+        window.addEventListener("load", () => {
+          update();
+        });
+      })();
+    </script>
+  </body>
+</html>
