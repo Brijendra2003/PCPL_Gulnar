@@ -447,14 +447,16 @@
     <link rel="stylesheet" href="button.css" />
     <link rel="stylesheet" href="horizontal_scroll.css" />
     <link rel="stylesheet" href="SectionSlider.css" />
+    <link rel="stylesheet" href="Responsive.css" />
 
     <title>Gulnar | By PCPL</title>
   </head>
   <body>
     <!---------------------------------------------- Hero Section -------------------------------------------------------------->
     <div class="container-fluid p-0" id="home">
-      <img src="Assets/gulnar_Elevaion_desktop.png" class="w-100" alt="..." />
-
+      
+      <img src="Assets/gulnar_Elevaion_desktop.png" class="w-100 hero-desktop" alt="..." />
+      <img src="Assets\Cam_02Final.png" class="w-100 hero-mobile" alt="..." />
       <div
         class="hero-sub-container border d-flex align-items-center justify-content-center flex-column boxShadow"
         style="width: 500px; padding: 20px"
@@ -464,9 +466,9 @@
         data-aos-offset="100"
         data-aos-once="true"
       >
-        <img style="width: 300px" src="Assets/NIRVANA.png" alt="" />
+        <!-- <img style="width: 300px" src="Assets/NIRVANA.png" alt="" /> -->
         <h2
-          class="Cinzel text-uppercase text-center fs-1"
+          class="Cinzel text-uppercase text-center fs-1 discover-home"
           style="color: #274c77"
         >
           Discover a Home Built on Trust
@@ -477,24 +479,18 @@
 
     <!---------------------------------------------- Graphical Section 3-------------------------------------------------------------->
     <div
-      class="container-fluid bg-image2 my-flex justify-content-center flex-column gap-2"
+      class="container-fluid bg-image2 my-flex justify-content-center flex-column gap-2 gs3"
       style="height: 85vh; z-index: 2"
     >
       <div
         class="container-xl d-flex align-items-center justify-content-center gap-2 flex-wrap"
         style="z-index: 3; color: white"
       >
-        <h3 class="text-center w-100 font1" style="font-size: 55px">
+        <h3 class="text-center w-100 font1 refine-home" style="font-size: 55px">
           <br />
           Refined homes for meaningful living
         </h3>
-        <!-- <h3
-          class="w-100 text-center"
-          style="font-size: 40px; font-family: Cinzel"
-        >
-          Smart layouts, serene views and over 15 lifestyle amenities.
-        </h3> -->
-        <p class="w-75 mt-4 text-justify">
+        <p class="w-75 mt-4 text-justify my-paragraph">
           With a legacy of designing spaces that blend purpose with poetry, PCPL
           has always believed that a home should be more than just four walls—it
           should be an experience. Every project is a testament to
@@ -508,7 +504,7 @@
           meaningful as the milestones themselves.
         </p>
 
-        <div class="w-100 d-flex">
+        <div class="w-100 d-flex btn2">
           <button class="btn-17 m-auto">
             <span class="text-container">
               <span class="text" style="color: white !important"
@@ -551,7 +547,7 @@
           <span></span><span>&nbsp;Amenities&nbsp;</span><span></span>
         </div>
         <p
-          class="bg-blue p-2"
+          class="bg-blue p-2 my-paragraph"
           style="z-index: 5; border-radius: 10px; width: 80%"
         >
           Our amenities are created to provide a harmonious balance of comfort,
@@ -559,7 +555,10 @@
           designed to offer residents an experience that enriches daily living
           and inspires moments of calm, joy, and connection.
         </p>
-        <div class="boxShadow" style="width: 80%; border-radius: 20px; margin-bottom: 50px;">
+        <div
+          class="boxShadow amenities-slider"
+          style="width: 80%; border-radius: 20px; margin-bottom: 50px"
+        >
           <div
             id="carouselExampleCaptions"
             class="carousel slide"
@@ -733,7 +732,7 @@
         </div>
 
         <div
-          class="container-fluid w-48 boxShadow"
+          class="container-fluid w-48 boxShadow map"
           style="
             padding: 0px;
             height: 450px;
@@ -983,7 +982,7 @@
     <!---------------------------------------------- Project Gallery -------------------------------------------------------------->
     <div class="container-fluid py-5">
       <div
-        class="d-flex align-items-start justify-content-center flex-wrap"
+        class="project-gallery d-flex align-items-start justify-content-center flex-wrap"
         style="width: 1200px; margin: auto"
       >
         <div class="divider header">
@@ -1076,13 +1075,13 @@
     <!---------------------------------------------- Floor Plan -------------------------------------------------------------->
     <div class="container-fluid py-5 pt-0" id="floor-plan">
       <div
-        class="container-xl d-flex align-items-center justify-content-center flex-wrap gap-0"
+        class="container-xl d-flex align-items-center justify-content-center flex-wrap gap-2"
       >
         <div class="divider header">
           <span></span><span>&nbsp;Floor Plan&nbsp;</span><span></span>
         </div>
 
-        <div class="container-fluid floor-plan center-element mb-3">
+        <div class="container-fluid floor-plan center-element mb-3 typical-f">
           <div
             class="container-fluid floor-plan-child w-100 p-0 d-flex"
             data-aos="slide-left"
@@ -1206,7 +1205,7 @@
     </div>
     <!---------------------------------------------- extra section -------------------------------------------------------------->
 
-    <div class="container-fluid py-5 bg-blue">
+    <div class="container-fluid py-5 bg-blue reraDetails">
       <div
         class="container-xl boxShadow d-flex flex-wrap align-items-center"
         style="
@@ -1283,7 +1282,7 @@
         </div>
 
         <div
-          class="container-fluid w-48 border-start border-dark d-flex flex-column justify-content-center align-items-start p-3"
+          class="container-fluid w-48 border-start border-dark d-flex flex-column justify-content-center align-items-start p-3 reraDetails-right"
         >
           <div class="card-body">
             <h5 class="fs-1 font1">GULNAR</h5>
@@ -1320,7 +1319,7 @@
 
     <div class="container-fluid py-5 bg-blue">
       <div
-        class="container-xl boxShadow d-flex flex-wrap"
+        class="container-xl boxShadow d-flex flex-wrap yt-video"
         style="border-radius: 20px; background-color: white; padding: 50px"
         data-aos="slide-up"
         data-aos-duration="1200"
